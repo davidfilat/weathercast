@@ -11,7 +11,11 @@ async function printCurrentWeather(cityName) {
   try {
     const response = await axios.get(OPEN_WEATHER_MAP_API);
     const data = response.data;
-    console.log(data.weather[0].description);
+
+    console.log(
+      `În ${data.name} este ${data.weather[0].description}.` +
+        `\nTemperatura curentă este de ${data.main.temp}°C.`
+    );
   } catch (error) {
     console.log(error.message);
   }
