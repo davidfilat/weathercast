@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { OPEN_WEATHER_MAP_API_KEY } from './credentials.js';
-
+import Table from 'cli-table3';
+import { DateTime } from 'luxon';
 async function getData(url) {
   try {
     const response = await axios.get(url);
@@ -32,6 +33,20 @@ export async function printWeatherFor7Days({ lat, lon }) {
     `&appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric&lang=ro`;
 
   const data = await getData(OPEN_WEATHER_MAP_API);
+  let table = new Table({
+    head: ['Data', 'Temp max.', 'Temp min.', 'Vinteza vântului'],
+  });
 
-  console.log(data.daily.length);
+  const dailyData = data.daily;
+  dailyData.forEach((dayData) => {
+    const date = DateTime.fromSeconds(dayData.dt)
+      .setLocale('ro')
+      .toLocaleString(DateTime.DATE_MED);
+
+    const arr = [date, dayData.temp.max, dayData.temp.min, dayData.wind_speed];
+
+    table.push(arr);
+  });
+
+  console.log(table.toString());
 }
