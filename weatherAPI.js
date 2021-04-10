@@ -33,7 +33,11 @@ export async function printWeatherFor7Days({ lat, lon }) {
     `&appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric&lang=ro`;
 
   const data = await getData(OPEN_WEATHER_MAP_API);
-  let table = new Table({
+  printForecastTable(data);
+}
+
+function printForecastTable(data) {
+  const table = new Table({
     head: ['Data', 'Temp max.', 'Temp min.', 'Vinteza vântului'],
   });
 
