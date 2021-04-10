@@ -2,6 +2,11 @@ import axios from 'axios';
 import { OPEN_WEATHER_MAP_API_KEY } from './credentials.js';
 import Table from 'cli-table3';
 import { DateTime } from 'luxon';
+
+const units = {
+  temperature: ' °C',
+  wind_speed: ' m/s',
+};
 async function getData(url) {
   try {
     const response = await axios.get(url);
@@ -21,7 +26,7 @@ export async function printCurrentWeather(cityName) {
 
   console.log(
     `În ${data.name} este ${data.weather[0].description}.` +
-      `\nTemperatura curentă este de ${data.main.temp}°C.` +
+      `\nTemperatura curentă este de ${data.main.temp}${units.temperature}.` +
       `\nLong: ${data.coord.lon} Lat: ${data.coord.lat}`
   );
   return data.coord;
@@ -47,7 +52,12 @@ function printForecastTable(data) {
       .setLocale('ro')
       .toLocaleString(DateTime.DATE_MED);
 
-    const arr = [date, dayData.temp.max, dayData.temp.min, dayData.wind_speed];
+    const arr = [
+      date,
+      dayData.temp.max + units.temperature,
+      dayData.temp.min + units.temperature,
+      dayData.wind_speed + units.wind_speed,
+    ];
 
     table.push(arr);
   });
