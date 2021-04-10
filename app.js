@@ -1,4 +1,5 @@
-import { printCurrentWeather } from './weatherAPI.js';
+import { printCurrentWeather, printWeatherFor7Days } from './weatherAPI.js';
 const city = process.argv[2];
 
-printCurrentWeather(city);
+const coords = await printCurrentWeather(city);
+printWeatherFor7Days(coords);
