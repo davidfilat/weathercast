@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { OPEN_WEATHER_MAP_API_KEY } from './credentials.js';
-import Table from 'cli-table3';
 import { DateTime } from 'luxon';
+import { OPEN_WEATHER_MAP_API_KEY } from './credentials.js';
+import axios from 'axios';
+import Table from 'cli-table3';
+import chalk from 'chalk';
 
 const units = {
   temperature: ' °C',
@@ -30,7 +31,7 @@ async function getData(url) {
     };
 
     const errorCode = error.code || Number(error.response.data.cod);
-    console.log(errorMessages[errorCode]);
+    console.log(chalk.red.bgYellow.bold(errorMessages[errorCode]));
     process.exit();
   }
 }
