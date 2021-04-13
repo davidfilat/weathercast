@@ -88,14 +88,14 @@ function printForecastTable(data) {
       .setLocale('ro')
       .toLocaleString(DateTime.DATE_MED);
 
-    const arr = [
+    const row = [
       date,
       dayData.temp.max + units.temperature,
       dayData.temp.min + units.temperature,
       dayData.wind_speed + units.wind_speed,
     ];
 
-    table.push(arr);
+    table.push(row);
   });
 
   console.log(table.toString());
